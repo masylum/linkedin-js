@@ -46,3 +46,12 @@ Params must contain the token.
     });
 
     app.listen(3003);
+
+## Test
+
+To test and see this module working:
+
+  * copy the test folder
+  * set up the keys and password of your app
+  * run it _node test/client.js_
+  * Open your browser at localhost:3003
