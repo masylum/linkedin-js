@@ -1,1 +1,1 @@
-module.exports.linkedinClient = require('./lib/linkedin_client');
+module.exports = require('./lib/linkedin_client');

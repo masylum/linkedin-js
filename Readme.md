@@ -16,8 +16,14 @@ Params must contain the token.
 
 ## Example using express.js
 
+    // You need sessions
+    app.configure(function () {
+      app.use(connect.cookieDecoder());
+      app.use(connect.session());
+    });
+
     app.get('/linkedin/share/:message', function (req, res) {
-      var linkedinClient = require('linkedin-js').linkedinClient('consumerKey', 'consumerSecret');
+      var linkedinClient = require('linkedin-js')('consumerKey', 'consumerSecret');
 
       linkedinClient.getAccessToken(req, res, function (error, token) {
         linkedinClient.apiCall('POST', '/people/~/shares',
@@ -33,3 +39,4 @@ Params must contain the token.
           }
         );
       });
+    });
