@@ -19,11 +19,7 @@ Params must contain the token.
     var express = require('express'),
         connect = require('connect');
 
-    var linkedinClient = require('./../')(
-          'key',
-          'secret',
-          'http://localhost:3003/'
-        ),
+    var linkedinClient = require('./../')('key', 'secret', 'http://localhost:3003/'),
         app = express.createServer(
           connect.cookieDecoder(),
           connect.session()
