@@ -1,0 +1,12 @@
+h1 Test, linkedin-js
+form(action: '/message', method: 'post')
+  label token
+  input(name: 'oauth_token', value: token && token.oauth_token)
+  br
+  label token secret
+  input(name: 'oauth_token_secret', value: token && token.oauth_token_secret)
+  br
+  label message
+  textarea(name: 'message')
+  br
+  input(type: 'submit') Post
