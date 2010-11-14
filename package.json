@@ -1,7 +1,7 @@
 {
   "name": "linkedin-js",
   "description": "easy peasy linkedin client",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Pau Ramon <masylum@gmail.com>",
   "keywords": ["linkedin"],
   "dependencies": { "oauth": ">= 0.8.2", "xml2js": ">=0.1.5" },
