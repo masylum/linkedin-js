@@ -2,52 +2,65 @@
 
 Easy peasy linkedin client for connect.
 
-    npm install linkedin-js
+``` bash
+npm install linkedin-js
+```
 
 ## Usage
 
 linkedin-js has two methods.
 
-* getAccesToken(_req_, _res_, _callback_): Uses oAuth module to retrieve the access_token
-* apiCall(_http_method_, _path_, _params_, _callback_): Does a call to linkedin API.
+* getAccesToken(req, res, callback): Uses oAuth module to retrieve the access_token
+* apiCall(http_method, path, params, callback): Does a call to the linkedin API.
 
-Params are sent as javascript objects and parsed to XML.
+Params are sent as JSON.
 Params must contain the token.
+
+[Using JSON with linkedin API](http://developer.linkedin.com/docs/DOC-1203)
 
 ## Example using express.js
 
-    var express = require('express'),
-        connect = require('connect');
+``` javascript
+var express = require('express')
+  , linkedin_client = require('linkedin-js')('key', 'secret', 'http://localhost:3003/auth')
+  , app = express.createServer(
+      express.cookieDecoder()
+    , express.session()
+    );
 
-    var linkedinClient = require('./../')('key', 'secret', 'http://localhost:3003/'),
-        app = express.createServer(
-          connect.cookieDecoder(),
-          connect.session()
-        );
+app.get('/auth', function (req, res) {
+  // the first time will redirect to linkedin
+  linkedin_client.getAccessToken(req, res, function (error, token) {
+    // will enter here when coming back from linkedin
+    res.render('auth');
+  });
+});
 
-    app.get('/', function (req, res) {
-      linkedinClient.getAccessToken(req, res, function (error, token) {
-        res.render('auth.jade');
-      });
-    });
+app.post('/message', function (req, res) {
+  linkedin_client.apiCall('POST', '/people/~/shares',
+    {
+      token: {
+        oauth_token_secret: req.param('oauth_token_secret')
+      , oauth_token: req.param('oauth_token')
+      }
+    , share: {
+        comment: req.param('message')
+      , visibility: {code: 'anyone'}
+      }
+    }
+  , function (error, result) {
+      res.render('message_sent');
+    }
+  );
+});
 
-    app.post('/message', function (req, res) {
-      linkedinClient.apiCall('POST', '/people/~/shares',
-        { token: { oauth_token_secret: req.param('oauth_token_secret'), oauth_token: req.param('oauth_token') },
-          share: {comment: req.param('message'), visibility: {code: 'anyone'}}},
-        function (error, result) {
-          res.render('message_sent.jade');
-        }
-      );
-    });
-
-    app.listen(3003);
+app.listen(3003);
+```
 
 ## Test
 
-To test and see this module working:
+linkdin is fully tested using [testosterone](https://github.com/masylum/testosterone)
 
-  * copy the test folder
-  * set up the keys and password of your app
-  * run it _node test/client.js_
-  * Open your browser at localhost:3003
+``` bash
+make
+```

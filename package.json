@@ -1,10 +1,14 @@
 {
   "name": "linkedin-js",
-  "description": "easy peasy linkedin client",
-  "version": "0.0.5",
+  "description": "Minimalistic linkedin API client",
+  "version": "0.1.0",
   "author": "Pau Ramon <masylum@gmail.com>",
   "keywords": ["linkedin"],
-  "dependencies": { "oauth": ">= 0.8.2", "xml2js": ">=0.1.5" },
+  "dependencies": { "oauth": "0.9.0" },
+  "devDependencies": {
+    "testosterone": "1.2.0",
+    "gently": "0.9.1"
+  },
   "main" : "lib/linkedin_client.js",
   "directories" : { "lib" : "./lib" },
   "repository" : {"type": "git" , "url": "http://github.com/masylum/linkedin-js.git" },
