@@ -25,7 +25,7 @@ var express = require('express')
   , linkedin_client = require('linkedin-js')('key', 'secret', 'http://localhost:3003/auth')
   , app = express.createServer(
       express.cookieParser()
-    , express.session()
+    , express.session({ secret: "string" })
     );
 
 app.get('/auth', function (req, res) {
