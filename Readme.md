@@ -32,6 +32,10 @@ app.get('/auth', function (req, res) {
   // the first time will redirect to linkedin
   linkedin_client.getAccessToken(req, res, function (error, token) {
     // will enter here when coming back from linkedin
+    
+    // save the oauth token into current session
+    req.session.token = token;
+    
     res.render('auth');
   });
 });
@@ -40,8 +44,8 @@ app.post('/message', function (req, res) {
   linkedin_client.apiCall('POST', '/people/~/shares',
     {
       token: {
-        oauth_token_secret: req.param('oauth_token_secret')
-      , oauth_token: req.param('oauth_token')
+          oauth_token_secret: req.session.token.oauth_token_secret
+        , oauth_token: req.session.token.oauth_token
       }
     , share: {
         comment: req.param('message')
