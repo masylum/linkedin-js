@@ -24,8 +24,8 @@ Params must contain the token.
 var express = require('express')
   , linkedin_client = require('linkedin-js')('key', 'secret', 'http://localhost:3003/auth')
   , app = express.createServer(
-      express.cookieDecoder()
-    , express.session()
+      express.cookieParser()
+    , express.session({ secret: "string" })
     );
 
 app.get('/auth', function (req, res) {
