@@ -52,5 +52,23 @@ testosterone
     , {token: token, contentType: 'linkedin-html', body: 'hola', '_locale': 'en-US'}
     , callback);
   })
+  
+  .add('`apiCall` GET', function (done) {
+      var callback;
+      
+      gently.expect(linkedin_client.oauth, 'get', function (_path, _token, _secret, _callback) {
+           assert.equal(_path, 'http://api.linkedin.com/v1/people-search?keywords=linkedin&format=json');
+           assert.equal(_token, token.oauth_token);
+           assert.equal(_secret, token.oauth_token_secret);
+           assert.equal(_callback, callback);
+           _callback();
+         });
+
+         callback = gently.expect(function (error, response, body) {
+           done();
+         });
+
+         linkedin_client.apiCall('GET', '/people-search?keywords=linkedin', {token: token}, callback);
+  })
 
   .run();
