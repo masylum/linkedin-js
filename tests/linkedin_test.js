@@ -37,7 +37,7 @@ testosterone
       assert.equal(_token, token.oauth_token);
       assert.equal(_secret, token.oauth_token_secret);
       assert.deepEqual(_params, JSON.stringify({contentType: 'linkedin-html', body: 'hola', '_locale': 'en-US'}));
-      assert.deepEqual(_accept_header, 'application/json; charset=UTF-8');
+      assert.deepEqual(_accept_header, 'application/json');
       //assert.equal(_callback, callback);
       _callback();
     });
