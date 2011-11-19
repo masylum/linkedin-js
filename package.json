@@ -4,7 +4,7 @@
   "version": "0.1.4-bloomtime",
   "author": "Pau Ramon <masylum@gmail.com>",
   "keywords": ["linkedin"],
-  "dependencies": { "oauth": "~0.9.1" },
+  "dependencies": { "oauth": "0.9.1" },
   "devDependencies": {
     "testosterone": "1.2.0",
     "gently": "0.9.1"
