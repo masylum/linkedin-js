@@ -33,7 +33,7 @@ app.get('/auth', function (req, res) {
   linkedin_client.getAccessToken(req, res, function (error, token) {
     // will enter here when coming back from linkedin
     req.session.token = token;
-    
+
     res.render('auth');
   });
 });
@@ -57,6 +57,14 @@ app.post('/message', function (req, res) {
 });
 
 app.listen(3003);
+```
+
+If you're using express 3.0 or greater replace the `app = express.createServer` line with this:
+
+``` javascript
+var app = express();
+app.use( express.cookieParser() );
+app.use( express.session({ secret : "string" }) );
 ```
 
 ## Test
