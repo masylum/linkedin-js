@@ -18,7 +18,8 @@ Params must contain the token.
 
 [Using JSON with linkedin API](http://developer.linkedin.com/docs/DOC-1203)
 
-## Example using express.js
+## Example using express.js and specifying member permissions 
+[See "Granting Member Permissions to Your Application"](https://developer.linkedin.com/documents/authentication#granting)
 
 ``` javascript
 var express = require('express')
@@ -35,7 +36,7 @@ app.get('/auth', function (req, res) {
     req.session.token = token;
     
     res.render('auth');
-  });
+  }, ['rw_nus', 'r_network'] /*This AccessToken should be granted these member permissions*/);
 });
 
 app.post('/message', function (req, res) {
