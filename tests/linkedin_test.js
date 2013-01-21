@@ -18,7 +18,6 @@ testosterone
       assert.equal(_path, 'http://api.linkedin.com/v1/people/id=abcdefg?format=json');
       assert.equal(_token, token.oauth_token);
       assert.equal(_secret, token.oauth_token_secret);
-      assert.equal(_callback, callback);
       _callback();
     });
 
@@ -27,6 +26,52 @@ testosterone
     });
 
     linkedin_client.apiCall('GET', '/people/id=abcdefg', {token: token}, callback);
+  })
+
+  .add('Adding permissions to `getAccessToken` should not break backwards compatibility', function (done) {
+    var request = {
+          url : 'http://somehost.com/somepath',
+          socket : {encrypted:false},
+          headers : {
+            host: 'localhost'
+          }
+        }
+      , response = {}
+      , callback = function() {};
+
+    gently.expect(linkedin_client.oauth, 'getOAuthRequestToken', function(_additionalParams, _callback) {
+      assert.equal(_additionalParams.scope, "");
+      done();
+    });
+
+    linkedin_client.getAccessToken(
+      request
+    , response
+    , callback);
+  })
+
+  .add('`getAccessToken` allows member permissions to be specified', function (done) {
+    var request = {
+          url : 'http://somehost.com/somepath',
+          socket : {encrypted:false},
+          headers : {
+            host: 'localhost'
+          }
+        }
+      , response = {}
+      , callback = function() {}
+      , permissions = ['r_network', 'rw_nus'];
+
+    gently.expect(linkedin_client.oauth, 'getOAuthRequestToken', function(_additionalParams, _callback) {
+      assert.equal(_additionalParams.scope, "r_network,rw_nus");
+      done();
+    });
+
+    linkedin_client.getAccessToken(
+      request
+    , response
+    , callback
+    , permissions);
   })
 
   .add('`apiCall` POST', function (done) {
@@ -38,7 +83,6 @@ testosterone
       assert.equal(_secret, token.oauth_token_secret);
       assert.deepEqual(_params, {contentType: 'linkedin-html', body: 'hola', '_locale': 'en-US'});
       assert.deepEqual(_accept_header, 'application/json; charset=UTF-8');
-      assert.equal(_callback, callback);
       _callback();
     });
 
@@ -60,7 +104,6 @@ testosterone
            assert.equal(_path, 'http://api.linkedin.com/v1/people-search?keywords=linkedin&format=json');
            assert.equal(_token, token.oauth_token);
            assert.equal(_secret, token.oauth_token_secret);
-           assert.equal(_callback, callback);
            _callback();
          });
 

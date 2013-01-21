@@ -1,7 +1,7 @@
 {
   "name": "linkedin-js",
   "description": "Minimalistic linkedin API client",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "Pau Ramon <masylum@gmail.com>",
   "keywords": ["linkedin"],
   "dependencies": { "oauth": "0.9.0" },
